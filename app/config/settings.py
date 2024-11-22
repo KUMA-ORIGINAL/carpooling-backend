@@ -38,15 +38,15 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_HEADERS = ["Authorization", "Content-Type", "Accept"]
 
-if DEBUG:
-    SECURE_SSL_REDIRECT = False
-    SESSION_COOKIE_SECURE = False
-    CSRF_COOKIE_SECURE = False
-else:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+# if DEBUG:
+#     SECURE_SSL_REDIRECT = False
+#     SESSION_COOKIE_SECURE = False
+#     CSRF_COOKIE_SECURE = False
+# else:
+#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#     SECURE_SSL_REDIRECT = True
+#     SESSION_COOKIE_SECURE = True
+#     CSRF_COOKIE_SECURE = True
 
 # Application definition
 
@@ -66,7 +66,9 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'corsheaders',
 
-    'rides'
+    'accounts',
+    'orders',
+    'products'
 ]
 
 MIDDLEWARE = [
@@ -167,32 +169,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = ["https://api.makalabox.com"]
 
-AUTH_USER_MODEL = 'rides.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 DOMAIN = 'makalabox.com'
 
 SITE_NAME = 'makalabox.team@gmail.com'
 
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_RENDERER_CLASSES': (
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
         'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
     ),
+
     'DEFAULT_PARSER_CLASSES': (
         'djangorestframework_camel_case.parser.CamelCaseFormParser',
         'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
@@ -207,44 +206,44 @@ SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': True,
 }
 
-#
-# DJOSER = {
-#     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-#     'ACTIVATION_URL': 'activate/{uid}/{token}',
-#     'SEND_ACTIVATION_EMAIL': True,
-#     'SEND_CONFIRMATION_EMAIL': False,
-#     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
-#     'USERNAME_CHANGED_EMAIL_CONFIRMATION': False,
-#     'SET_PASSWORD_RETYPE': True,
-#     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
-#     'TOKEN_MODEL': None,
-#     'USER_ID_FIELD': 'username',
-#     'SERIALIZERS': {
-#         'user_create': 'account.serializers.UserCreateSerializer',
-#         'user': 'account.serializers.UserSerializer',
-#         'current_user': 'account.serializers.UserSerializer',
-#     },
-#     'EMAIL': {
-#         'activation': 'account.email.ActivationEmail',
-#         'confirmation': 'account.email.ConfirmationEmail',
-#     },
-#     'PERMISSIONS': {
-#         'user': ['account.permissions.CurrentUserOrAdminOrReadOnly'],
-#         'user_create': ['rest_framework.permissions.AllowAny'],
-#         'user_delete': ['rest_framework.permissions.IsAdminUser'],
-#         'user_update': ['djoser.permissions.CurrentUserOrAdmin'],
-#     },
-#     'DISABLED_ENDPOINTS': [
-#         'user/set_username',
-#         'user/reset_username',
-#         'user/reset_username_confirm'
-#     ],
-# }
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL': False,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': False,
+    'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    'TOKEN_MODEL': None,
+    'USER_ID_FIELD': 'username',
+    'SERIALIZERS': {
+        'user_create': 'accounts.serializers.UserCreateSerializer',
+        'user': 'accounts.serializers.UserSerializer',
+        'current_user': 'accounts.serializers.UserSerializer',
+    },
+    # 'EMAIL': {
+    #     'activation': 'account.email.ActivationEmail',
+    #     'confirmation': 'account.email.ConfirmationEmail',
+    # },
+    'PERMISSIONS': {
+        # 'user': ['account.permissions.CurrentUserOrAdminOrReadOnly'],
+        'user_create': ['rest_framework.permissions.AllowAny'],
+        'user_delete': ['rest_framework.permissions.IsAdminUser'],
+        'user_update': ['djoser.permissions.CurrentUserOrAdmin'],
+    },
+    'DISABLED_ENDPOINTS': [
+        'user/set_username',
+        'user/reset_username',
+        'user/reset_username_confirm'
+    ],
+}
 
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'test',
-    'DESCRIPTION': 'Your project description',
+    'TITLE': 'EraExpress',
+    'DESCRIPTION': 'Best project',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'CAMELIZE_NAMES': True,
@@ -253,4 +252,3 @@ SPECTACULAR_SETTINGS = {
         'drf_spectacular.contrib.djangorestframework_camel_case.camelize_serializer_fields',
     ],
 }
-
