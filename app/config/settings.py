@@ -215,10 +215,8 @@ DJOSER = {
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'USERNAME_CHANGED_EMAIL_CONFIRMATION': False,
     'SET_PASSWORD_RETYPE': True,
-    'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'TOKEN_MODEL': None,
-    # 'USER_ID_FIELD': 'username',
     'LOGIN_FIELD': 'email',
     'SERIALIZERS': {
         'user_create': 'accounts.serializers.UserCreateSerializer',

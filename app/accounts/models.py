@@ -27,8 +27,7 @@ class User(AbstractUser):
     )
     username = models.CharField(max_length=150, blank=True, null=True, unique=True)
     email = models.EmailField("email address", unique=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+    full_name = models.CharField(max_length=30)
     role = models.CharField(max_length=20,
                             default='client',
                             choices=ROLE_CHOICES)
@@ -36,7 +35,7 @@ class User(AbstractUser):
     address = models.TextField(blank=True, null=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['full_name']
 
     objects = CustomUserManager()
 
