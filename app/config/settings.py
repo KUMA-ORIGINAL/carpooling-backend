@@ -144,9 +144,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bishkek'
 
 USE_I18N = True
 
@@ -171,9 +171,9 @@ CSRF_TRUSTED_ORIGINS = ["https://api.makalabox.com"]
 
 AUTH_USER_MODEL = 'accounts.User'
 
-DOMAIN = 'makalabox.com'
+DOMAIN = 'localhost:8000'
 
-SITE_NAME = 'makalabox.team@gmail.com'
+# SITE_NAME = 'makalabox.team@gmail.com'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
@@ -215,9 +215,11 @@ DJOSER = {
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'USERNAME_CHANGED_EMAIL_CONFIRMATION': False,
     'SET_PASSWORD_RETYPE': True,
+    'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'TOKEN_MODEL': None,
-    'USER_ID_FIELD': 'username',
+    # 'USER_ID_FIELD': 'username',
+    'LOGIN_FIELD': 'email',
     'SERIALIZERS': {
         'user_create': 'accounts.serializers.UserCreateSerializer',
         'user': 'accounts.serializers.UserSerializer',

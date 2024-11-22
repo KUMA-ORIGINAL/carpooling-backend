@@ -23,7 +23,7 @@ class UserAdmin(UserAdmin):
         ),
         ("Dates", {"fields": ("last_login", "date_joined")}),
         ('required', {
-                 'fields': ('username', 'first_name', 'last_name', 'role',
+                 'fields': ('first_name', 'last_name', 'role',
                             )}),
     )
     add_fieldsets = (
@@ -46,5 +46,5 @@ class UserAdmin(UserAdmin):
 
     ordering = ['date_joined']
 
-    list_display = ('id', 'username', 'email', 'first_name', 'last_name', 'role', 'is_active')
-    list_display_links = ('id', 'username')
+    list_display = ('id', 'email', 'first_name', 'last_name', 'role', 'is_active')
+    list_display_links = ('id', 'email')
